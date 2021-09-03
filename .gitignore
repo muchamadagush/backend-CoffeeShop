@@ -1882,13 +1882,13 @@ node_modules/yallist/yallist.js
 .env
 src/routes/categories.js
 src/routes/products.js
-src/routes/userAuth.js
+
 src/routes/users.js
 src/models/categories.js
 src/models/products.js
-src/models/userAuth.js
+
 src/models/users.js
 src/controllers/categories.js
 src/controllers/products.js
-src/controllers/userAuth.js
+
 src/controllers/users.js
