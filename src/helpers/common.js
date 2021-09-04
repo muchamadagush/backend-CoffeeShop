@@ -178,7 +178,7 @@ const sendEmailResetPassword = (toEmail,  token) => {
             <div class="wrapper">
                 <div class="container">
 
-                    <h1>welcome to SKS Coffee Shop Service</h1>
+                    <h1>Welcome to SKS Coffee Shop Service</h1>
                     <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been forgot the password! To verify your email address and complete reset your password, please click the verification button below:</p>
                     <a href="${process.env.FRONT_URL}/reset-password/${token}<input type="button" value="RESET PASSWORD" class="button">RESET PASSWORD</a>

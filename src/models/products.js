@@ -15,19 +15,23 @@ const paginationProduct = (numPerPage, page, searchPage) => {
     });
 };
 
-const getAllProduct = (field, sort, limit, search) => {
-    return new Promise((resolve, reject) => {
-        connection.query(
-          `SELECT * FROM products INNER JOIN categories ON products.category_id=categories.category_id ${search} ORDER BY ${field} ${sort} LIMIT ${limit} `,
-          (error, result) => {
-            if (!error) {
-              resolve(result);
-            } else {
-              reject(error);
-            }
-          }
-        );
-    });
+const getAllProduct = (field, sort, limit, paramSearch) => {
+  let search = ``;
+  if (paramSearch) {
+    search = `WHERE name LIKE '%${paramSearch}%'`;
+  } 
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT * FROM products INNER JOIN categories ON products.category_id=categories.category_id ${search} ORDER BY ${field} ${sort} LIMIT ${limit} `,
+      (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
 };
 
 

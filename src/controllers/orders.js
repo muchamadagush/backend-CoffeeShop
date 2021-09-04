@@ -21,8 +21,8 @@ const getOrder = (req, res, next) => {
   orderModel
     .getOrder(id)
     .then((result) => {
-      const reservations = result;
-      helpers.response(res, "Success get order", reservations, 200);
+      const order = result;
+      helpers.response(res, "Success get order", order, 200);
     })
     .catch((error) => {
       console.log(error);

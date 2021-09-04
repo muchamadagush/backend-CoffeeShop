@@ -14,17 +14,11 @@ const getAllProduct = (req, res, next) => {
   const field = req.query.field || "name";
   const sort = req.query.sort || "ASC";
   const paramSearch = req.query.search || "";
-  let search = `WHERE name LIKE '%${paramSearch}%'`;
-  if (search != "WHERE name LIKE '%%'") {
-    search = `WHERE name LIKE '%${paramSearch}%'`;
-  } else {
-    search = "";
-  }
-  let searchPage = search;
+  
   // Here we compute the LIMIT parameter for MySQL query
   const limit = skip + "," + numPerPage;
   productModel
-    .paginationProduct(numPerPage, page, searchPage)
+    .paginationProduct(numPerPage, page, paramSearch)
     .then((result) => {
       numRows = result[0].numRows;
       numPages = Math.ceil(numRows / numPerPage);
