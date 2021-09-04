@@ -52,6 +52,6 @@ const autorizedCustommer= (req, res, next) => {
 
 module.exports = {
   verifyAccess,
-  autorizedMember,
+  autorizedCustommer,
   autorizedAdmin,
 };
