@@ -37,7 +37,7 @@ const register = async (req, res, next) => {
             process.env.SECRET_KEY,
             { expiresIn: "2h" },
             function (err, token) {
-              common.sendEmail(data.email, data.name, token);
+              common.sendEmail(data.email, token);
             }
           );
           helpers.response(res, "Success register", data, 200);
@@ -111,11 +111,11 @@ const forgotPassword = (req, res, next) => {
       const user = result[0];
       delete user.password;
       jwt.sign(
-        { name: user.name, email: user.email },
+        { id: user.id, email: user.email },
         process.env.SECRET_KEY,
         { expiresIn: "2h" },
         function (err, token) {
-          common.sendEmailResetPassword(user.email, user.name, token);
+          common.sendEmailResetPassword(user.email, token);
           console.log(token);
           helpers.response(res, "Success forgot password", user, 200);
         }
