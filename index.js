@@ -14,7 +14,8 @@ const cookieParser = require("cookie-parser");
 
 // middleware
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 const optionCors = { credentials: true, origin:`${process.env.FRONT_URL}` };
