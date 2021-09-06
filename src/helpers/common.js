@@ -83,7 +83,7 @@ const sendEmail = (toEmail,  token) => {
                     <h1>Welcome to SKS Coffee Shop Service</h1>
                     <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been successfully created! To verify your email address and complete your account creation, please click the verification button below:</p>
-                    <a href="${process.env.BASE_URL}/activation/${token}<input type="button" value="VERIFY ACOOUNT" class="button">VERIFY ACOOUNT</a>
+                    <a href="${process.env.BASE_URL}/activation/${token}"><input type="button" value="VERIFY ACOOUNT" class="button">VERIFY ACOOUNT</a>
                 </div>
             </div>
         </body>
@@ -181,18 +181,31 @@ const sendEmailResetPassword = (toEmail,  token) => {
                     <h1>Welcome to SKS Coffee Shop Service</h1>
                     <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been forgot the password! To verify your email address and complete reset your password, please click the verification button below:</p>
-                    <a href="${process.env.FRONT_URL}/reset-password/${token}<input type="button" value="RESET PASSWORD" class="button">RESET PASSWORD</a>
+                    <a href="${process.env.FRONT_URL}/reset-password/${token}"><input type="button" value="RESET PASSWORD" class="button">RESET PASSWORD</a>
                 </div>
             </div>
         </body>
         </html>`, // html body
     })
     .then(() => {
-      helpers.response(res, "Success send email data", toEmail, 200);
+      // helpers.response(res, "Success send email data", toEmail, 200);
+        const resultPrint = {};
+        resultPrint.status = 200;
+        resultPrint.message = "Success send email data";
+        resultPrint.data = toEmail;
+        resultPrint.error = null;
+       res.status(resultPrint.status).json(resultPrint);
+
     })
     .catch((error) => {
       // console.log(error);
-      helpers.response(res, "Failed send email data", null, 404);
+      // helpers.response(res, "Failed send email data", null, 404);
+      const resultPrint = {};
+      resultPrint.status = 404;
+      resultPrint.message = "Failed send email data";
+      resultPrint.data = toEmail;
+      resultPrint.error = error;
+      res.status(resultPrint.status).json(resultPrint);
     });
 };
 

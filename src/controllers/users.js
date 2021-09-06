@@ -36,6 +36,7 @@ const insertUser = (req, res, next) => {
   const fileName = req.file.filename;
   const urlFileName = `${process.env.BASE_URL}/files/${req.file.filename}`;
   const {
+    display_name,
     first_name,
     last_name,
     email,
@@ -47,6 +48,7 @@ const insertUser = (req, res, next) => {
   } = req.body;
   const data = {
     id: uuidv4(),
+    display_name: display_name,
     first_name: first_name,
     last_name: last_name,
     email: email,
@@ -90,7 +92,7 @@ const updateUser = (req, res) => {
     const oldImageUser = result[0].image;
 
     const newImageUser = `${process.env.BASE_URL}/files/${imageUserInput}`;
-    const {
+    const {display_name,
       first_name,
       last_name,
       email,
@@ -106,6 +108,7 @@ const updateUser = (req, res) => {
       avatar = newImageUser;
     }
     const data = {
+      display_name:display_name,
       first_name: first_name,
       last_name: last_name,
       email: email,
