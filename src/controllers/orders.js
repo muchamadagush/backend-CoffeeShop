@@ -3,7 +3,7 @@ const helpers = require("../helpers/helpers");
 const short = require("short-uuid");
 
 const getAllOrder = (req, res, next) => {
-    const limit = req.params.limit;
+  const limit = req.params.limit;
   orderModel
     .getAllOrder(limit)
     .then((result) => {
@@ -21,8 +21,8 @@ const getOrder = (req, res, next) => {
   orderModel
     .getOrder(id)
     .then((result) => {
-      const reservations = result;
-      helpers.response(res, "Success get order", reservations, 200);
+      const order = result;
+      helpers.response(res, "Success get order", order, 200);
     })
     .catch((error) => {
       console.log(error);
@@ -32,7 +32,7 @@ const getOrder = (req, res, next) => {
 
 const insertOrder = (req, res, next) => {
   const id = short.generate();
-  const { id_user, total, payment } = req.body;
+  const { id_user, total, payment, detailproducts } = req.body;
   const data = {
     id_order: id,
     id_user: id_user,
@@ -44,32 +44,34 @@ const insertOrder = (req, res, next) => {
 
   orderModel
     .insertOrder(data)
-    .then(() => {
-      helpers.response(res, "Success insert order", data, 200);
+    .then((data) => {
+      detailproducts.map((item) => {
+        const detailProduct = {
+          id_order: data.id_order,
+          id_product: item.id_product,
+          size_order: item.size_order,
+          quantity: item.quantity,
+        };
+        orderModel
+          .insertOrderDetail(detailProduct)
+          .then((datadetail) => {
+            helpers.response(
+              res,
+              `Success insert orderdetails ${index}`,
+              datadetail,
+              200
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+            helpers.response(res, `Failed insert order ${index}`, null, 404);
+          });
+        helpers.response(res, "Success insert order", data, 200);
+      });
     })
     .catch((error) => {
       console.log(error);
       helpers.response(res, "Failed insert order", null, 404);
-    });
-};
-
-const insertOrderDetail = (req, res, next) => {
-  const { id_order, id_product, size_order,quantity } = req.body;
-  const data = {
-    id_order: id_order,
-    id_product: id_product,
-    size_order: size_order,
-    quantity: quantity,
-  };
-
-  orderModel
-    .insertOrderDetail(data)
-    .then(() => {
-      helpers.response(res, "Success insert order detail", data, 200);
-    })
-    .catch((error) => {
-      console.log(error);
-      helpers.response(res, "Failed insert order detail", null, 404);
     });
 };
 
