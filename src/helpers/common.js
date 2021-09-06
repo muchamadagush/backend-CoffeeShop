@@ -28,7 +28,7 @@ const sendEmail = (toEmail,  token) => {
                     /* font-family: metropolis; */
                 }
                 .wrapper{
-                    height: 380px;
+                    height: 100%;
                     width: 350px;
                     background-color: white;
                     border: 1px solid black;
@@ -83,7 +83,7 @@ const sendEmail = (toEmail,  token) => {
                     <h1>Welcome to SKS Coffee Shop Service</h1>
                     <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been successfully created! To verify your email address and complete your account creation, please click the verification button below:</p>
-                    <a href="${process.env.BASE_URL}/activation/${token}"><input type="button" value="VERIFY ACOOUNT" class="button">VERIFY ACOOUNT</a>
+                    <a href="${process.env.BASE_URL}/activation/${token}"><input type="button" value="VERIFY ACOOUNT" class="button"></a>
                 </div>
             </div>
         </body>
@@ -127,7 +127,7 @@ const sendEmailResetPassword = (toEmail,  token) => {
                     /* font-family: metropolis; */
                 }
                 .wrapper{
-                    height: 380px;
+                    height: 100%;
                     width: 350px;
                     background-color: white;
                     border: 1px solid black;
@@ -182,16 +182,18 @@ const sendEmailResetPassword = (toEmail,  token) => {
                     <h1>Welcome to SKS Coffee Shop Service</h1>
                     <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been forgot the password! To verify your email address and complete reset your password, please click the verification button below:</p>
-                    <a href="${process.env.FRONT_URL}/reset-password/${token}"><input type="button" value="RESET PASSWORD" class="button">RESET PASSWORD</a>
+                    <a href="${process.env.FRONT_URL}/reset-password/${token}"><input type="button" value="RESET PASSWORD" class="button"></a>
                 </div>
             </div>
         </body>
         </html>`, // html body
     })
-    .then(() => {console.log("Success send email data");
+    .then(() => {
+      console.log("Success send email data");
       // helpers.response(res, "Success send email data", toEmail, 200);
     })
-    .catch((error) => {console.log("Failed send email data");
+    .catch((error) => {
+      console.log("Failed send email data");
       // helpers.response(res, "Failed send email data", null, 404);
     });
 };
