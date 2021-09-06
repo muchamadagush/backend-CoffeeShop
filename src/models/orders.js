@@ -5,7 +5,7 @@ const paramlimit = ``;
     if (limit){ paramlimit = `limit ${limit}`;}
   return new Promise((resolve, reject) => {
     connection.query(
-      `SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order paramlimit ORDER BY createdAt_order DESC ${paramlimit} `,
+      `SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order ORDER BY createdAt_order DESC ${paramlimit} `,
       (error, result) => {
         if (!error) {
           resolve(result);

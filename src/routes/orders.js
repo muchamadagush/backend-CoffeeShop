@@ -7,7 +7,7 @@ router
   .get("/", auth.verifyAccess, orderController.getAllOrder)
   .get("/:id", auth.verifyAccess, orderController.getOrder)
   .post("/", auth.verifyAccess, orderController.insertOrder)
-  .post("/orderdetail", auth.verifyAccess, orderController.insertOrderDetail)
+  // .post("/orderdetail", auth.verifyAccess, orderController.insertOrderDetail)
   .put("/:id", auth.verifyAccess, orderController.updateOrder)
   .delete("/:id", auth.verifyAccess, orderController.deleteOrder);
 
