@@ -75,6 +75,26 @@ const insertOrder = (req, res, next) => {
     });
 };
 
+const insertOrderDetail = (req, res, next) => {
+  const { id_order, id_product, size_order, quantity } = req.body;
+  const data = {
+    id_order: id_order,
+    id_product: id_product,
+    size_order: size_order,
+    quantity: quantity,
+  };
+
+  orderModel
+    .insertOrderDetail(data)
+    .then(() => {
+      helpers.response(res, "Success insert order detail", data, 200);
+    })
+    .catch((error) => {
+      console.log(error);
+      helpers.response(res, "Failed insert order detail", null, 404);
+    });
+};
+
 const updateOrder = (req, res) => {
   const id = req.params.id;
   const { id_user, total, payment, status_payment } = req.body;
