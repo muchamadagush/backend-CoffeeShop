@@ -50,64 +50,60 @@ const register = async (req, res, next) => {
   });
 };
 
-const login = (req, res, next) => {
-  const { email, password } = req.body;
-  userModels
-    .findUser(email)
-    .catch((result) => {
-      const user = result[0];
-      const status = user.status;
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = (await userModels.findUser(email))[0];
 
-      if (status == "ACTIVED") {
-        bcrypt.compare(password, user.password, function (err, resCompare) {
-          if (!resCompare) {
-            return helpers.response(res, "password wrong", null, 401);
-          }
+    if (!user)
+      return res.status(404).send({ message: 'email not registered!' });
 
-          // generate token
-          jwt.sign(
-            { email: user.email, id: user.id },
-            process.env.SECRET_KEY,
-            { expiresIn: "24h" },
-            function (err, token) {
-              delete user.password;
-              user.token = token;
-              user.token = token;
-              res.cookie("token", token, {
-                httpOnly: true,
-                max: 1000 * 60 * 60 * 24,
-                secure: true,
-                path: "/",
-                sameSite: "strict",
-              });
-              res.cookie("user_id", user.id, {
-                max: 1000 * 60 * 60 * 24,
-                path: "/",
-              });
-              res.cookie("user_role", user.role, {
-                max: 1000 * 60 * 60 * 24,
-                path: "/",
-              });
-              res.cookie("user_image", user.image, {
-                max: 1000 * 60 * 60 * 24,
-                path: "/",
-              });
-              res.cookie("user_isAuth", true, {
-                max: 1000 * 60 * 60 * 24,
-                path: "/",
-              });
-              helpers.response(res, "success login", user, 200);
-            }
-          );
-        });
-      } else {
-        return helpers.response(res, "account not actived", null, 401);
+    bcrypt.compare(password, user.password, (err, resCompare) => {
+      if (resCompare === false)
+        return res.status(401).send({ message: `email and password don't match!` });
+
+      const payload = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        avatar: user.avatar,
+        gender: user.gender,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 2
       }
+
+      const token = jwt.sign(payload, process.env.SECRET_KEY);
+      res.cookie("token", token, {
+        httpOnly: true,
+        max: 1000 * 60 * 60 * 24,
+        secure: true,
+        path: "/",
+        sameSite: "strict",
+      });
+      res.cookie("user_id", user.id, {
+        max: 1000 * 60 * 60 * 24,
+        path: "/",
+      });
+      res.cookie("user_role", user.role, {
+        max: 1000 * 60 * 60 * 24,
+        path: "/",
+      });
+      res.cookie("user_image", user.image, {
+        max: 1000 * 60 * 60 * 24,
+        path: "/",
+      });
+      res.cookie("user_isAuth", true, {
+        max: 1000 * 60 * 60 * 24,
+        path: "/",
+      });
+      delete user.password
+
+      res.json({ user });
     })
-    .catch((error) => {
-      console.log(error);
-      helpers.response(res, "email not registered yet", null, 500);
-    });
+  } catch (error) {
+    next(new Error(error.message))
+  }
 };
 
 const activation = (req, res, next) => {
