@@ -49,7 +49,7 @@ const sendEmail = (toEmail,  token) => {
                     height: 45px;
                     width: 65%;
                     text-align: center;
-<!--        margin: 35px auto;  -->
+
                     display: block;
                     border-radius: 8px;
                 }
@@ -148,7 +148,7 @@ const sendEmailResetPassword = (toEmail,  token) => {
                     height: 45px;
                     width: 65%;
                     text-align: center;
-<!--        margin: 35px auto;  -->
+
                     display: block;
                     border-radius: 8px;
                 }
