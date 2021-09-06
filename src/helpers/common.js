@@ -90,11 +90,12 @@ const sendEmail = (toEmail,  token) => {
         </html>`, // html body
       })
       .then(() => {
-        helpers.response(res, "Success send email data", toEmail, 200);
+console.log("Success send email data");
+        // helpers.response(res, "Success send email data", toEmail, 200);
       })
       .catch((error) => {
-        // console.log(error);
-        helpers.response(res, "Failed send email data", null, 404);
+        console.log("Failed send email data");
+        // helpers.response(res, "Failed send email data", null, 404);
       });
 };
 
@@ -187,25 +188,11 @@ const sendEmailResetPassword = (toEmail,  token) => {
         </body>
         </html>`, // html body
     })
-    .then(() => {
+    .then(() => {console.log("Success send email data");
       // helpers.response(res, "Success send email data", toEmail, 200);
-        const resultPrint = {};
-        resultPrint.status = 200;
-        resultPrint.message = "Success send email data";
-        resultPrint.data = toEmail;
-        resultPrint.error = null;
-       res.status(resultPrint.status).json(resultPrint);
-
     })
-    .catch((error) => {
-      // console.log(error);
+    .catch((error) => {console.log("Failed send email data");
       // helpers.response(res, "Failed send email data", null, 404);
-      const resultPrint = {};
-      resultPrint.status = 404;
-      resultPrint.message = "Failed send email data";
-      resultPrint.data = toEmail;
-      resultPrint.error = error;
-      res.status(resultPrint.status).json(resultPrint);
     });
 };
 
