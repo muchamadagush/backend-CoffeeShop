@@ -79,7 +79,7 @@ const getProduct = (req, res, next) => {
 };
 
 const getProductByCategory = (req, res, next) => {
-  const category_name = req.params.category_name;
+  const category_name = req.query.category || "Favorite & Promo";
  let numRows;
  const numPerPage = parseInt(req.query.npp) || 15;
  const page = parseInt(req.query.page) || 1;

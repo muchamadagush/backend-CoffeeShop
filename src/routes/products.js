@@ -7,7 +7,7 @@ const auth = require("../middlewares/auth");
 router
   .get("/", productController.getAllProduct)
   .get("/:id", auth.verifyAccess, productController.getProduct)
-  .get("/category/:category_id", productController.getProductByCategory)
+  .get("/category", productController.getProductByCategory)
   .post(
     "/",
     auth.verifyAccess,
