@@ -79,20 +79,58 @@ const getProduct = (req, res, next) => {
 };
 
 const getProductByCategory = (req, res, next) => {
-  const category_id = req.params.category_id;
-  const field = req.query.field || "name_product";
-  const sort = req.query.sort || "ASC";
-  productModel
-    .getProductByCategory(category_id, field, sort)
-    .then((result) => {
-      const products = result;
-      helpers.response(res, "Success get data", products, 200);
-    })
-    .catch((error) => {
-      console.log(error);
-      const err = new createError.InternalServerError();
-      next(err);
-    });
+  const category_name = req.params.category_name;
+ let numRows;
+ const numPerPage = parseInt(req.query.npp) || 15;
+ const page = parseInt(req.query.page) || 1;
+ let numPages;
+ const skip = (page - 1) * numPerPage;
+ const field = req.query.field || "name_product";
+ const sort = req.query.sort || "ASC";
+
+ // Here we compute the LIMIT parameter for MySQL query
+ const limit = skip + "," + numPerPage;
+ productModel
+   .paginationCategory(numPerPage, page, category_name)
+   .then((result) => {
+     numRows = result[0].numRows;
+     numPages = Math.ceil(numRows / numPerPage);
+     console.log("number per pages:", numPerPage);
+     console.log("number of pages:", numPages);
+     console.log("total pages:", numRows);
+   });
+
+ productModel
+   .getProductByCategory(field, sort, limit, category_name)
+   .then((result) => {
+     const responsePayload = {
+       result: result,
+     };
+     if (page <= numPages) {
+       responsePayload.pagination = {
+         totalData: numRows,
+         current: page,
+         totalPages: numPages,
+         perPage: numPerPage,
+         previous: page > 1 ? page - 1 : undefined,
+         next: page < numPages ? page + 1 : undefined,
+         sortBy: field,
+         orderBy: sort,
+         category: category_name,
+       };
+     } else {
+       responsePayload.pagination = {
+         err:
+           "queried page " + page + " is >= to maximum page number " + numPages,
+       };
+     }
+
+     helpers.response(res, "Success get data", responsePayload, 200);
+   })
+   .catch((error) => {
+     console.log(error);
+     helpers.response(res, "Not found product", null, 404);
+   });
 };
 
 const insertProduct = (req, res, next) => {

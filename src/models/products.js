@@ -55,21 +55,36 @@ const getProduct = (id) => {
     });
 };
 
+const paginationCategory = (numPerPage, page, category_name) => {
+  let search = ``;
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT count(*) as numRows FROM products WHERE categories.category = "${category_name}" `,
+      (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
+};
 
-const getProductByCategory = (category_id, field, sort) => {
-    return new Promise((resolve, reject) => {
-        connection.query(
-          `SELECT * FROM products INNER JOIN categories ON products.category_id=categories.category_id WHERE products.category_id = ? ORDER BY ${field} ${sort}`,
-          category_id,
-          (error, result) => {
-            if (!error) {
-              resolve(result);
-            } else {
-              reject(error);
-            }
-          }
-        );
-    });
+const getProductByCategory = (field, sort, limit, category_name) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT * FROM products INNER JOIN categories ON products.category_id=categories.category_id WHERE categories.category = ? ORDER BY ${field} ${sort} LIMIT ${limit}`,
+      category_name,
+      (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
 };
 
 
@@ -121,6 +136,7 @@ module.exports = {
   paginationProduct,
   getAllProduct,
   getProduct,
+  paginationCategory,
   getProductByCategory,
   insertProduct,
   updateProduct,
