@@ -7,6 +7,7 @@ router
   .post("/login", userController.login)
   .get("/activation/:token", userController.activation)
   .post("/forgotpassword", userController.forgotPassword)
-  .post("/resetpassword/:token", userController.resetPassword);
+  .post("/resetpassword/:token", userController.resetPassword)
+  .get("/logout", userController.logout)
 
 module.exports = router;
