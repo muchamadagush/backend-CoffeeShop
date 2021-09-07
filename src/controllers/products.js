@@ -7,6 +7,7 @@ const dirPath = path.join(__dirname, "../../uploads");
 
 const getAllProduct = (req, res, next) => {
   let numRows;
+  const searchBy = req.query.searchBy || "products.name_product";
   const numPerPage = parseInt(req.query.npp) || 15;
   const page = parseInt(req.query.page) || 1;
   let numPages;
@@ -18,7 +19,7 @@ const getAllProduct = (req, res, next) => {
   // Here we compute the LIMIT parameter for MySQL query
   const limit = skip + "," + numPerPage;
   productModel
-    .paginationProduct(numPerPage, page, paramSearch)
+    .paginationProduct(numPerPage, page, paramSearch, searchBy)
     .then((result) => {
       numRows = result[0].numRows;
       numPages = Math.ceil(numRows / numPerPage);
@@ -28,7 +29,7 @@ const getAllProduct = (req, res, next) => {
     });
 
   productModel
-    .getAllProduct(field, sort, limit, paramSearch)
+    .getAllProduct(field, sort, limit, paramSearch, searchBy)
     .then((result) => {
       const responsePayload = {
         result: result,

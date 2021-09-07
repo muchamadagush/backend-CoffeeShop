@@ -1,9 +1,9 @@
 const connection = require("../configs/db");
 
-const paginationProduct = (numPerPage, page, paramSearch) => {
+const paginationProduct = (numPerPage, page, paramSearch, searchBy) => {
   let search = ``;
   if (paramSearch) {
-    search = `WHERE products.name_product LIKE '%${paramSearch}%'`;
+    search = `WHERE ${searchBy} LIKE '%${paramSearch}%'`;
   }
   return new Promise((resolve, reject) => {
     connection.query(
@@ -19,11 +19,11 @@ const paginationProduct = (numPerPage, page, paramSearch) => {
   });
 };
 
-const getAllProduct = (field, sort, limit, paramSearch) => {
+const getAllProduct = (field, sort, limit, paramSearch, searchBy) => {
   let search = ``;
   if (paramSearch) {
-    search = `WHERE products.name_product LIKE '%${paramSearch}%'`;
-  } 
+    search = `WHERE ${searchBy} LIKE '%${paramSearch}%'`;
+  }
   return new Promise((resolve, reject) => {
     connection.query(
       `SELECT * FROM products INNER JOIN categories ON products.category_id=categories.category_id ${search} ORDER BY ${field} ${sort} LIMIT ${limit} `,
