@@ -11,7 +11,7 @@ const getAllProduct = (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   let numPages;
   const skip = (page - 1) * numPerPage;
-  const field = req.query.field || "name";
+  const field = req.query.field || "name_product";
   const sort = req.query.sort || "ASC";
   const paramSearch = req.query.search || "";
   
@@ -80,7 +80,7 @@ const getProduct = (req, res, next) => {
 
 const getProductByCategory = (req, res, next) => {
   const category_id = req.params.category_id;
-  const field = req.query.field || "name";
+  const field = req.query.field || "name_product";
   const sort = req.query.sort || "ASC";
   productModel
     .getProductByCategory(category_id, field, sort)

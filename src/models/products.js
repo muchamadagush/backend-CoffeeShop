@@ -3,7 +3,7 @@ const connection = require("../configs/db");
 const paginationProduct = (numPerPage, page, paramSearch) => {
   let search = ``;
   if (paramSearch) {
-    search = `WHERE name LIKE '%${paramSearch}%'`;
+    search = `WHERE products.name_product LIKE '%${paramSearch}%'`;
   }
   return new Promise((resolve, reject) => {
     connection.query(
@@ -22,7 +22,7 @@ const paginationProduct = (numPerPage, page, paramSearch) => {
 const getAllProduct = (field, sort, limit, paramSearch) => {
   let search = ``;
   if (paramSearch) {
-    search = `WHERE name LIKE '%${paramSearch}%'`;
+    search = `WHERE products.name_product LIKE '%${paramSearch}%'`;
   } 
   return new Promise((resolve, reject) => {
     connection.query(
