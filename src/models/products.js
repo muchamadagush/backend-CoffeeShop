@@ -1,18 +1,22 @@
 const connection = require("../configs/db");
 
-const paginationProduct = (numPerPage, page, searchPage) => {
-    return new Promise((resolve, reject) => {
-        connection.query(
-            `SELECT count(*) as numRows FROM products ${searchPage} `,
-            (error, result) => {
-                if (!error) {
-                    resolve(result);
-                } else {
-                    reject(error);
-                }
-            }
-        );
-    });
+const paginationProduct = (numPerPage, page, paramSearch) => {
+  let search = ``;
+  if (paramSearch) {
+    search = `WHERE name LIKE '%${paramSearch}%'`;
+  }
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT count(*) as numRows FROM products ${search} `,
+      (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
 };
 
 const getAllProduct = (field, sort, limit, paramSearch) => {

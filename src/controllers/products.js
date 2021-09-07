@@ -28,7 +28,7 @@ const getAllProduct = (req, res, next) => {
     });
 
   productModel
-    .getAllProduct(field, sort, limit, search)
+    .getAllProduct(field, sort, limit, paramSearch)
     .then((result) => {
       const responsePayload = {
         result: result,
