@@ -6,8 +6,10 @@ const dirPath = path.join(__dirname, "../../uploads");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllUser = (req, res, next) => {
+  const role = req.role
+
   userModel
-    .getAllUser()
+    .getAllUser(role)
     .then((result) => {
       const users = result;
       helpers.response(res, "Success get data", users, 200);
@@ -96,7 +98,6 @@ const updateUser = (req, res) => {
       first_name,
       last_name,
       email,
-      password,
       address,
       phone,
       dateOfBirth,
@@ -112,7 +113,6 @@ const updateUser = (req, res) => {
       first_name: first_name,
       last_name: last_name,
       email: email,
-      password: password,
       address: address,
       phone: phone,
       dateOfBirth: dateOfBirth,
