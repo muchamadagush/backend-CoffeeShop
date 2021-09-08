@@ -33,6 +33,22 @@ const getOrder = (id) => {
   });
 };
 
+const getOrderByUserId = (id) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      "SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order WHERE orders.id_user = ?",
+      id,
+      (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
+};
+
 const insertOrder = (data) => {
   return new Promise((resolve, reject) => {
     connection.query(
@@ -96,6 +112,7 @@ const deleteOrder = (id) => {
 module.exports = {
   getAllOrder,
   getOrder,
+  getOrderByUserId,
   insertOrder,
   insertOrderDetail,
   updateOrder,

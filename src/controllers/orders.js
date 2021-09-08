@@ -30,6 +30,20 @@ const getOrder = (req, res, next) => {
     });
 };
 
+const getOrderByUserId = (req, res, next) => {
+  const id = req.params.id;
+  orderModel
+    .getOrderByUserId(id)
+    .then((result) => {
+      const order = result;
+      helpers.response(res, "Success get order", order, 200);
+    })
+    .catch((error) => {
+      console.log(error);
+      helpers.response(res, "Failed get order", null, 404);
+    });
+};
+
 const insertOrder = (req, res, next) => {
   const id = short.generate();
   const { id_user, total, payment, detailproducts } = req.body;
@@ -131,6 +145,7 @@ const deleteOrder = (req, res) => {
 module.exports = {
   getAllOrder,
   getOrder,
+  getOrderByUserId,
   insertOrder,
   insertOrderDetail,
   updateOrder,
