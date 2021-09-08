@@ -101,12 +101,11 @@ console.log("Success send email data");
 
 const sendEmailResetPassword = (toEmail,  token) => {
   // create reusable transporter object using the default SMTP transport
- 
   let transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: process.env.REALTIME_EMAIL, // generated ethereal user
-      pass: process.env.REALTIME_PASS, // generated ethereal password
+      user: process.env.COFFEESHOP_EMAIL, // generated ethereal user
+      pass: process.env.COFFEESHOP_PASS, // generated ethereal password
     },
   });
   transporter
@@ -182,7 +181,7 @@ const sendEmailResetPassword = (toEmail,  token) => {
                     <h1>Welcome to SKS Coffee Shop Service</h1>
                     <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been forgot the password! To verify your email address and complete reset your password, please click the verification button below:</p>
-                    <a href="${process.env.FRONT_URL}/auth/reset-password/${token}"><input type="button" value="RESET PASSWORD" class="button"></a>
+                    <a href="${process.env.FRONT_URL}/reset-password/${token}"><input type="button" value="RESET PASSWORD" class="button"></a>
                 </div>
             </div>
         </body>
@@ -193,6 +192,7 @@ const sendEmailResetPassword = (toEmail,  token) => {
       // helpers.response(res, "Success send email data", toEmail, 200);
     })
     .catch((error) => {
+      console.log(error);
       console.log("Failed send email data");
       // helpers.response(res, "Failed send email data", null, 404);
     });

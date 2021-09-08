@@ -121,7 +121,7 @@ const activation = (req, res, next) => {
     userModels
       .activationUser(email)
       .then(() => {
-        res.redirect(`${process.env.FRONT_URL}/auth/login`);
+        res.redirect(`${process.env.FRONT_URL}/login`);
       })
 
       .catch((error) => {
@@ -165,14 +165,14 @@ const resetPassword = (req, res, next) => {
       }
       jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
         if (err) {
-          helpers.response(res, "Access denied", null, 401);
+          return helpers.response(res, "Access denied", null, 401);
         }
         const email = decoded.email;
         userModels
           .resetPassword(email, hash)
           .then(() => {
+            // res.redirect(`${process.env.FRONT_URL}/login`);
             helpers.response(res, "Success set new password", email, 200);
-            res.redirect(`${process.env.FRONT_URL}/login/`);
           })
 
           .catch((error) => {
