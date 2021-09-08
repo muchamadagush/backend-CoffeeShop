@@ -16,7 +16,6 @@ router
   .put(
     "/:id",
     auth.verifyAccess,
-    auth.autorizedAdmin,
     orderController.updateOrder
   )
   .delete("/:id", auth.verifyAccess, orderController.deleteOrder);
