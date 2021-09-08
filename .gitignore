@@ -28,8 +28,4 @@ coverage
 benchmarks/graphs
 
 .env
-<<<<<<< HEAD
 uploads
-=======
-uploads
->>>>>>> staging
