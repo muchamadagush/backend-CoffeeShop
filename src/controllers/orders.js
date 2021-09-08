@@ -134,8 +134,7 @@ const updateOrder = (req, res) => {
     });
 };
 const deleteOrder = (req, res) => {
-  const id = req.body
-  console.log(id)
+   const id = req.body;
   orderModel
     .deleteOrder(id)
     .then(() => {
