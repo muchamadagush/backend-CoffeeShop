@@ -54,10 +54,10 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = (await userModels.findUser(email))[0];
-
+  const status = user.status;
     if (!user)
       return res.status(404).send({ message: 'email not registered!' });
-
+  if (status == "ACTIVED") {
     bcrypt.compare(password, user.password, (err, resCompare) => {
       if (resCompare === false)
         return res.status(401).send({ message: `email and password don't match!` });
@@ -101,10 +101,10 @@ const login = async (req, res, next) => {
 
       res.json({ user });
     })
+   } else { return helpers.response(res, "account not actived", null, 401); }
   } catch (error) {
-    next(new Error(error.message))
-  }
-};
+    next(new Error(error.message)) 
+};}
 
 const activation = (req, res, next) => {
   const token = req.params.token;
