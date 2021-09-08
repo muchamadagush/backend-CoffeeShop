@@ -20,7 +20,23 @@ const paramlimit = ``;
 const getOrder = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order WHERE orders.id_product = ?",
+      "SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order WHERE orders.id_order = ?",
+      id,
+      (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
+};
+
+const getOrderByUserId = (id) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      "SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order WHERE orders.id_user = ?",
       id,
       (error, result) => {
         if (!error) {
@@ -64,7 +80,7 @@ const insertOrderDetail = (data) => {
 const updateOrder = (id, data) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "UPDATE orders SET ? WHERE id = ?",
+      "UPDATE orders SET ? WHERE orders.id_order = ?",
       [data, id],
       (error, result) => {
         if (!error) {
@@ -80,7 +96,7 @@ const updateOrder = (id, data) => {
 const deleteOrder = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "DELETE FROM orders WHERE id = ?",
+      "UPDATE orders SET display = 'false' WHERE id_order = ?",
       id,
       (error, result) => {
         if (!error) {
@@ -96,6 +112,7 @@ const deleteOrder = (id) => {
 module.exports = {
   getAllOrder,
   getOrder,
+  getOrderByUserId,
   insertOrder,
   insertOrderDetail,
   updateOrder,
