@@ -121,7 +121,7 @@ const activation = (req, res, next) => {
     userModels
       .activationUser(email)
       .then(() => {
-        res.redirect(`${process.env.FRONT_URL}/login`);
+        res.redirect(`${process.env.FRONT_URL}/auth/login`);
       })
 
       .catch((error) => {
