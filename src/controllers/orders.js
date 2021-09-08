@@ -46,10 +46,11 @@ const getOrderByUserId = (req, res, next) => {
 
 const insertOrder = (req, res, next) => {
   const id = short.generate();
-  const { id_user, subtotal, payment, detailproducts } = req.body;
+  const { id_user, total,subtotal, payment, detailproducts } = req.body;
   const data = {
     id_order: id,
     id_user: id_user,
+    total: total,
     subtotal: subtotal,
     payment: payment,
     status_payment: "unpaid",
