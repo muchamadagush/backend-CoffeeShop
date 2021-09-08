@@ -96,7 +96,7 @@ const updateOrder = (id, data) => {
 const deleteOrder = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "DELETE FROM orders WHERE orders.id_order = ?",
+      "UPDATE orders SET display = 'false' WHERE id_order = ?",
       id,
       (error, result) => {
         if (!error) {

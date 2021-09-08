@@ -6,7 +6,7 @@ const auth = require("../middlewares/auth");
 router
   .get("/", auth.verifyAccess, auth.autorizedAdmin, orderController.getAllOrder)
   .get("/order/:id", auth.verifyAccess, orderController.getOrder)
-  .post(
+  .get(
     "/user/:id",
     auth.verifyAccess,
     auth.autorizedCustommer,
@@ -19,6 +19,6 @@ router
     auth.autorizedAdmin,
     orderController.updateOrder
   )
-  .delete("/:id", auth.verifyAccess, orderController.deleteOrder);
+  .patch("/", auth.verifyAccess, orderController.deleteOrder);
 
 module.exports = router;
