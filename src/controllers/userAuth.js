@@ -76,25 +76,25 @@ const login = async (req, res, next) => {
       const token = jwt.sign(payload, process.env.SECRET_KEY);
       res.cookie("token", token, {
         httpOnly: true,
-        max: 1000 * 60 * 60 * 24,
+        max: 7200000,
         secure: true,
         path: "/",
         sameSite: "strict",
       });
       res.cookie("user_id", user.id, {
-        max: 1000 * 60 * 60 * 24,
+        max: 7200000,
         path: "/",
       });
       res.cookie("user_role", user.role, {
-        max: 1000 * 60 * 60 * 24,
+        max: 7200000,
         path: "/",
       });
       res.cookie("user_image", user.image, {
-        max: 1000 * 60 * 60 * 24,
+        max: 7200000,
         path: "/",
       });
       res.cookie("user_isAuth", true, {
-        max: 1000 * 60 * 60 * 24,
+        max: 7200000,
         path: "/",
       });
       delete user.password
@@ -183,10 +183,29 @@ const resetPassword = (req, res, next) => {
   });
 };
 
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie('token')
+    res.clearCookie('user_id')
+    res.clearCookie('user_role')
+    res.clearCookie('user_image')
+    res.clearCookie('user_isAuth')
+
+    res.status(200);
+    res.json({
+      message: 'Success logout'
+    });
+  } catch (error) {
+    console.log(error)
+    next(new Error(error.message))
+  }
+}
+
 module.exports = {
   register,
   login,
   activation,
   forgotPassword,
   resetPassword,
+  logout
 };
