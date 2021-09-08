@@ -62,6 +62,8 @@ const insertOrder = (req, res, next) => {
       detailproducts.map((item) => {
         const detailProduct = {
           id_order: data.id_order,
+          order_time: data.order_time,
+          delivery_method: data.delivery_method,
           id_product: item.id_product,
           size_order: item.size_order,
           quantity: item.quantity,
