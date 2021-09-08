@@ -46,11 +46,12 @@ const getOrderByUserId = (req, res, next) => {
 
 const insertOrder = (req, res, next) => {
   const id = short.generate();
-  const { id_user, total, payment, detailproducts } = req.body;
+  const { id_user, total,subtotal, payment, detailproducts } = req.body;
   const data = {
     id_order: id,
     id_user: id_user,
     total: total,
+    subtotal: subtotal,
     payment: payment,
     status_payment: "unpaid",
     createdAt_order: new Date(),
@@ -58,10 +59,13 @@ const insertOrder = (req, res, next) => {
 
   orderModel
     .insertOrder(data)
-    .then((data) => {
+    .then((resultOrder) => {
+      console.log(data);
       detailproducts.map((item) => {
         const detailProduct = {
           id_order: data.id_order,
+          order_time: item.order_time,
+          delivery_method: item.delivery_method,
           id_product: item.id_product,
           size_order: item.size_order,
           quantity: item.quantity,
@@ -69,26 +73,25 @@ const insertOrder = (req, res, next) => {
         orderModel
           .insertOrderDetail(detailProduct)
           .then((datadetail) => {
-            helpers.response(
-              res,
-              `Success insert orderdetails ${index}`,
-              datadetail,
-              200
-            );
+            // helpers.response(
+            //   res,
+            //   `Success insert orderdetails ${index}`,
+            //   datadetail,
+            //   200
+            // );
           })
           .catch((error) => {
             console.log(error);
-            helpers.response(res, `Failed insert order ${index}`, null, 404);
+            // helpers.response(res, `Failed insert order ${index}`, null, 404);
           });
-        helpers.response(res, "Success insert order", data, 200);
       });
+      helpers.response(res, "Success insert order", data, 200);
     })
     .catch((error) => {
       console.log(error);
       helpers.response(res, "Failed insert order", null, 404);
     });
 };
-
 const insertOrderDetail = (req, res, next) => {
   const { id_order, id_product, size_order, quantity } = req.body;
   const data = {
@@ -111,11 +114,12 @@ const insertOrderDetail = (req, res, next) => {
 
 const updateOrder = (req, res) => {
   const id = req.params.id;
-  const { id_user, total, payment, status_payment } = req.body;
+  const { id_user, total,subtotal, payment, status_payment } = req.body;
   const data = {
     id_order: id,
     id_user: id_user,
     total: total,
+    subtotal: subtotal,
     payment: payment,
     status_payment: status_payment,
   };

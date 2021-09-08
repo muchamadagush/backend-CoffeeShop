@@ -5,7 +5,7 @@ const paramlimit = ``;
     if (limit){ paramlimit = `limit ${limit}`;}
   return new Promise((resolve, reject) => {
     connection.query(
-      `SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order ORDER BY createdAt_order DESC ${paramlimit} `,
+      `SELECT * FROM orders INNER JOIN users ON orders.id_user = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON orderdetails.id_product = products.id_product ORDER BY createdAt_order DESC ${paramlimit} `,
       (error, result) => {
         if (!error) {
           resolve(result);
@@ -20,7 +20,7 @@ const paramlimit = ``;
 const getOrder = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order WHERE orders.id_order = ?",
+      "SELECT * FROM orders INNER JOIN users ON orders.id_user = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON orderdetails.id_product = products.id_product WHERE orders.id_order = ?",
       id,
       (error, result) => {
         if (!error) {
@@ -36,7 +36,7 @@ const getOrder = (id) => {
 const getOrderByUserId = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "SELECT * FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON ordersdetails.id_product = products.id_order WHERE orders.id_user = ?",
+      "SELECT * FROM orders INNER JOIN users ON orders.id_user = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON orderdetails.id_product = products.id_product WHERE orders.id_user = ?",
       id,
       (error, result) => {
         if (!error) {
