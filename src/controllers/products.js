@@ -180,7 +180,7 @@ const updateProduct = (req, res) => {
  productModel.getProduct(id).then((result) => {
     const oldImageProduct = result[0].image_product;
 
-    const newImageProduct = `${process.env.BASE_URL}/files/${imageUserInput}`;
+    const newImageProduct = `${process.env.BASE_URL}/files/${imageProductInput}`;
     if (imageProductInput == "") {
       image_product = oldImageProduct;
     } else {
