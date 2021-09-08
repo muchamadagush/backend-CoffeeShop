@@ -1,9 +1,9 @@
 const connection = require('../configs/db')
 
-const getAllUser = () => {
+const getAllUser = (role) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      `SELECT * FROM users`,
+      `SELECT * FROM users WHERE role != '${role}'`,
       (error, result) => {
         if (!error) {
           resolve(result);
