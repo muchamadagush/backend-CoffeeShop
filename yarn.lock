@@ -164,6 +164,7 @@
     "color-convert" "^2.0.1"
 
 "any-base@^1.1.0":
+  "integrity" "sha512-uMgjozySS8adZZYePpaWs8cxB9/kdzmpX6SgJZ+wbz1K5eYk5QMYDVJaZKhxyIHUdnnJkfR7SVgStgH7LkGUyg=="
   "version" "1.1.0"
 
 "anymatch@~3.1.2":
@@ -1922,6 +1923,7 @@
   "version" "3.0.0"
 
 "short-uuid@^4.2.0":
+  "integrity" "sha512-r3cxuPPZSuF0QkKsK9bBR7u+7cwuCRzWzgjPh07F5N2iIUNgblnMHepBY16xgj5t1lG9iOP9k/TEafY1qhRzaw=="
   "version" "4.2.0"
   dependencies:
     "any-base" "^1.1.0"

@@ -18,6 +18,6 @@ router
     auth.verifyAccess,
     orderController.updateOrder
   )
-  .delete("/:id", auth.verifyAccess, orderController.deleteOrder);
+  .patch("/:id", auth.verifyAccess, orderController.deleteOrder);
 
 module.exports = router;
