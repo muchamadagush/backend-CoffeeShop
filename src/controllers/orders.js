@@ -58,12 +58,13 @@ const insertOrder = (req, res, next) => {
 
   orderModel
     .insertOrder(data)
-    .then((data) => {
+    .then((resultOrder) => {
+      console.log(data);
       detailproducts.map((item) => {
         const detailProduct = {
           id_order: data.id_order,
-          order_time: data.order_time,
-          delivery_method: data.delivery_method,
+          order_time: item.order_time,
+          delivery_method: item.delivery_method,
           id_product: item.id_product,
           size_order: item.size_order,
           quantity: item.quantity,
@@ -71,26 +72,25 @@ const insertOrder = (req, res, next) => {
         orderModel
           .insertOrderDetail(detailProduct)
           .then((datadetail) => {
-            helpers.response(
-              res,
-              `Success insert orderdetails ${index}`,
-              datadetail,
-              200
-            );
+            // helpers.response(
+            //   res,
+            //   `Success insert orderdetails ${index}`,
+            //   datadetail,
+            //   200
+            // );
           })
           .catch((error) => {
             console.log(error);
-            helpers.response(res, `Failed insert order ${index}`, null, 404);
+            // helpers.response(res, `Failed insert order ${index}`, null, 404);
           });
-        helpers.response(res, "Success insert order", data, 200);
       });
+      helpers.response(res, "Success insert order", data, 200);
     })
     .catch((error) => {
       console.log(error);
       helpers.response(res, "Failed insert order", null, 404);
     });
 };
-
 const insertOrderDetail = (req, res, next) => {
   const { id_order, id_product, size_order, quantity } = req.body;
   const data = {
