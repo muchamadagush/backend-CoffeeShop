@@ -36,8 +36,7 @@ const getOrder = (id) => {
 const getOrderByUserId = (id) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "SELECT * FROM orders INNER JOIN users ON orders.id_user = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON orderdetails.id_product = products.id_product WHERE orders.id_user = ?",
-      id,
+      `SELECT * FROM orders INNER JOIN users ON orders.id_user = users.id INNER JOIN orderdetails ON orders.id_order = orderdetails.id_order INNER JOIN products ON orderdetails.id_product = products.id_product WHERE orders.id_user = '${id}' AND display = 'true'`,
       (error, result) => {
         if (!error) {
           resolve(result);
