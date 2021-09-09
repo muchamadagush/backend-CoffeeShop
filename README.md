@@ -41,4 +41,4 @@ Open .env file on your favorite code editor, and copy paste this code below :
     COFFEESHOP_PASS
 ## License
 
-© [Squad Kebut Seminggu Team](https://https://github.com/19damah23/coffee-shop/)
+© [Squad Kebut Seminggu Team](https://github.com/19damah23/coffee-shop/)
