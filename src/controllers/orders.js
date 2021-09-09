@@ -46,13 +46,14 @@ const getOrderByUserId = (req, res, next) => {
 
 const insertOrder = (req, res, next) => {
   const id = short.generate();
+  console.log(req.body)
   const { id_user, total,subtotal, payment, detailproducts } = req.body;
   const data = {
     id_order: id,
     id_user: id_user,
     total: total,
     subtotal: subtotal,
-    payment: payment,
+    // payment: payment,
     status_payment: "unpaid",
     createdAt_order: new Date(),
   };
@@ -133,17 +134,17 @@ const updateOrder = (req, res) => {
       helpers.response(res, "Failed update order", null, 404);
     });
 };
-const deleteOrder = (req, res) => {
-  const id = req.body
-  orderModel
-    .deleteOrder(id)
-    .then(() => {
-      helpers.response(res, "Success delete data", id, 200);
-    })
-    .catch((err) => {
-      console.log(err);
-      helpers.response(res, "Failed delete order", null, 404);
-    });
+const deleteOrder = async (req, res) => {
+  try {
+    const id = req.body
+    
+    for (let i = 0; i < id.length; i++) {
+      await orderModel.deleteOrder(id[i])
+    }
+    helpers.response(res, "Success delete data", id, 200);
+  } catch (error) {
+    helpers.response(res, "Failed delete order", null, 404);
+  }
 };
 
 module.exports = {
