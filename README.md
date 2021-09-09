@@ -1,6 +1,6 @@
 <h1 align="center">ExpressJS - #backend-CoffeeShop RESTfull API</h1>
 
-#background_project. [More about Express](https://en.wikipedia.org/wiki/Express.js)
+Coffee Shop is a store that sells some good meals, and especially coffee. We provide high quality beans
 
 ## Built With
 
