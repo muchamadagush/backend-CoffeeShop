@@ -74,32 +74,32 @@ const login = async (req, res, next) => {
       }
 
       const token = jwt.sign(payload, process.env.SECRET_KEY);
-      res.cookie("token", token, {
-        httpOnly: true,
-        max: 7200000,
-        secure: true,
-        path: "/",
-        sameSite: "strict",
-      });
-      res.cookie("user_id", user.id, {
-        max: 7200000,
-        path: "/",
-      });
-      res.cookie("user_role", user.role, {
-        max: 7200000,
-        path: "/",
-      });
-      res.cookie("user_image", user.image, {
-        max: 7200000,
-        path: "/",
-      });
-      res.cookie("user_isAuth", true, {
-        max: 7200000,
-        path: "/",
-      });
+      // res.cookie("token", token, {
+      //   httpOnly: true,
+      //   max: 7200000,
+      //   secure: true,
+      //   path: "/",
+      //   sameSite: "strict",
+      // });
+      // res.cookie("user_id", user.id, {
+      //   max: 7200000,
+      //   path: "/",
+      // });
+      // res.cookie("user_role", user.role, {
+      //   max: 7200000,
+      //   path: "/",
+      // });
+      // res.cookie("user_image", user.image, {
+      //   max: 7200000,
+      //   path: "/",
+      // });
+      // res.cookie("user_isAuth", true, {
+      //   max: 7200000,
+      //   path: "/",
+      // });
       delete user.password
 
-      res.json({ user });
+      res.json({ user,token });
     })
    } else { return helpers.response(res, "account not actived", null, 401); }
   } catch (error) {
