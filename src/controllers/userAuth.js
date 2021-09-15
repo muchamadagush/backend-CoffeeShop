@@ -99,7 +99,7 @@ const login = async (req, res, next) => {
       // });
       delete user.password
 
-      res.json({ user,token });
+      res.json({ ...user,token:token });
     })
    } else { return helpers.response(res, "account not actived", null, 401); }
   } catch (error) {
