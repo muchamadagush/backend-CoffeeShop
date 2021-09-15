@@ -217,7 +217,7 @@ const updateProduct = (req, res) => {
               if (image_product === oldImageProduct) {
                 console.log("no change on image!");
               } else {
-                fs.unlink(`${dirPath}/${oldImageProduct.substr(28)}`, (err) => {
+                fs.unlink(`${dirPath}/${oldImageProduct.substr(42)}`, (err) => {
                   if (err) {
                     console.log("Error unlink image product!" + err);
                   }
@@ -237,21 +237,22 @@ const updateProduct = (req, res) => {
 };
 const deleteProduct = (req, res) => {
   const id = req.params.id;
+   productModel.getProduct(id).then((data) => {
   productModel
     .deleteProduct(id)
     .then((result) => {
       helpers.response(res, "Success delete data", id, 200);
-    //    fs.unlink(`${dirPath}/${result[0].image_product.substr(28)}`, (err) => {
-    //      if (err) {
-    //        console.log("Error unlink image product!" + err);
-    //      }
-    //    });
+       fs.unlink(`${dirPath}/${data[0].image_product.substr(42)}`, (err) => {
+         if (err) {
+           console.log("Error unlink image product!" + err);
+         }
+       });
     })
     .catch((err) => {
       console.log(err);
       helpers.response(res, "Not found id product", null, 404);
       
-    });
+    });})
 };
 
 module.exports = {
