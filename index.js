@@ -6,6 +6,7 @@ const userRouter = require("./src/routes/users");
 const userAuthRouter = require("./src/routes/userAuth");
 const productRouter = require("./src/routes/products");
 const categoryRouter = require("./src/routes/categories");
+const orderRouter = require("./src/routes/orders");
 const morgan = require("morgan");
 const port = process.env.DB_PORT || 3500;
 const cors = require("cors");
@@ -14,13 +15,15 @@ const cookieParser = require("cookie-parser");
 
 // middleware
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 const optionCors = { credentials: true, origin:`${process.env.FRONT_URL}` };
 app.use(cors(optionCors));
 app.use(cookieParser());
 
+app.use("/orders", orderRouter);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/users", userRouter);

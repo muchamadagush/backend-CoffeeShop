@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const helpers = require("../helpers/helpers");
 
-const sendEmail = (toEmail, toName, token) => {
+const sendEmail = (toEmail,  token) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: "Gmail",
@@ -14,7 +14,7 @@ const sendEmail = (toEmail, toName, token) => {
       .sendMail({
         from: `"SKS Coffee Shop Service" <${process.env.COFFEESHOP_EMAIL}>`, // sender address
         to: `${toEmail}`, // list of receivers
-        subject: `Activation for ${toName}`, // Subject line
+        subject: `Activation for ${toEmail}`, // Subject line
         html: `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -28,7 +28,7 @@ const sendEmail = (toEmail, toName, token) => {
                     /* font-family: metropolis; */
                 }
                 .wrapper{
-                    height: 380px;
+                    height: 100%;
                     width: 350px;
                     background-color: white;
                     border: 1px solid black;
@@ -43,16 +43,20 @@ const sendEmail = (toEmail, toName, token) => {
                     padding-right: 20px;
                 }
                 .button{
-                    color:#F3E3EC;
+   
+                    color:white;
                     background-color: #FFBA33;
                     height: 45px;
                     width: 65%;
                     text-align: center;
-                    margin: 35px auto;
+
                     display: block;
                     border-radius: 8px;
                 }
-                a{
+                a{margin:35px auto;
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
                     text-decoration: none;
                 }
                 h1{
@@ -76,39 +80,39 @@ const sendEmail = (toEmail, toName, token) => {
             <div class="wrapper">
                 <div class="container">
 
-                    <h1>welcome to SKS Coffee Shop Service</h1>
-                    <h3>Greetings ${toName}</h3>
+                    <h1>Welcome to SKS Coffee Shop Service</h1>
+                    <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been successfully created! To verify your email address and complete your account creation, please click the verification button below:</p>
-                    <a href="${process.env.BASE_URL}/activation/${token}<input type="button" value="VERIFY ACOOUNT" class="button"></a>
+                    <a href="${process.env.BASE_URL}/activation/${token}"><input type="button" value="VERIFY ACOOUNT" class="button"></a>
                 </div>
             </div>
         </body>
         </html>`, // html body
       })
       .then(() => {
-        helpers.response(res, "Success send email data", toEmail, 200);
+console.log("Success send email data");
+        // helpers.response(res, "Success send email data", toEmail, 200);
       })
       .catch((error) => {
-        // console.log(error);
-        helpers.response(res, "Not found id User", null, 404);
+        console.log("Failed send email data");
+        // helpers.response(res, "Failed send email data", null, 404);
       });
 };
 
-const sendEmailResetPassword = (toEmail, toName, token) => {
+const sendEmailResetPassword = (toEmail,  token) => {
   // create reusable transporter object using the default SMTP transport
- 
   let transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: process.env.REALTIME_EMAIL, // generated ethereal user
-      pass: process.env.REALTIME_PASS, // generated ethereal password
+      user: process.env.COFFEESHOP_EMAIL, // generated ethereal user
+      pass: process.env.COFFEESHOP_PASS, // generated ethereal password
     },
   });
   transporter
     .sendMail({
       from: `"SKS Coffee Shop Service" <${process.env.COFFEESHOP_EMAIL}>`, // sender address
       to: `${toEmail}`, // list of receivers
-      subject: `Reset Password for ${toName}`, // Subject line
+      subject: `Reset Password for ${toEmail}`, // Subject line
       html: `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -122,7 +126,7 @@ const sendEmailResetPassword = (toEmail, toName, token) => {
                     /* font-family: metropolis; */
                 }
                 .wrapper{
-                    height: 380px;
+                    height: 100%;
                     width: 350px;
                     background-color: white;
                     border: 1px solid black;
@@ -136,17 +140,21 @@ const sendEmailResetPassword = (toEmail, toName, token) => {
                     padding-left: 20px;
                     padding-right: 20px;
                 }
-                .button{
-                    color:#F3E3EC;
+               .button{
+   
+                    color:white;
                     background-color: #FFBA33;
                     height: 45px;
                     width: 65%;
                     text-align: center;
-                    margin: 35px auto;
+
                     display: block;
                     border-radius: 8px;
                 }
-                a{
+                a{margin:35px auto;
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
                     text-decoration: none;
                 }
                 h1{
@@ -170,21 +178,23 @@ const sendEmailResetPassword = (toEmail, toName, token) => {
             <div class="wrapper">
                 <div class="container">
 
-                    <h1>welcome to SKS Coffee Shop Service</h1>
-                    <h3>Greetings ${toName}</h3>
+                    <h1>Welcome to SKS Coffee Shop Service</h1>
+                    <h3>Greetings ${toEmail}</h3>
                     <p class="text">Your account has been forgot the password! To verify your email address and complete reset your password, please click the verification button below:</p>
-                    <a href="${process.env.FRONT_URL}/reset-password/${token}<input type="button" value="VERIFY ACOOUNT" class="button"></a>
+                    <a href="${process.env.FRONT_URL}/reset-password/${token}"><input type="button" value="RESET PASSWORD" class="button"></a>
                 </div>
             </div>
         </body>
         </html>`, // html body
     })
     .then(() => {
-      helpers.response(res, "Success send email data", toEmail, 200);
+      console.log("Success send email data");
+      // helpers.response(res, "Success send email data", toEmail, 200);
     })
     .catch((error) => {
-      // console.log(error);
-      helpers.response(res, "Not found id User", null, 404);
+      console.log(error);
+      console.log("Failed send email data");
+      // helpers.response(res, "Failed send email data", null, 404);
     });
 };
 
