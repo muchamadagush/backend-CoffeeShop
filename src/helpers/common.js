@@ -4,7 +4,9 @@ const helpers = require("../helpers/helpers");
 const sendEmail = (toEmail,  token) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-      service: "Gmail",
+      host: process.env.COFFEESHOP_HOST,
+      port: process.env.COFFEESHOP_PORT,
+      secure: process.env.COFFEESHOP_SECURE,
       auth: {
         user: process.env.COFFEESHOP_EMAIL, // generated ethereal user
         pass: process.env.COFFEESHOP_PASS, // generated ethereal password
@@ -102,7 +104,9 @@ console.log("Success send email data");
 const sendEmailResetPassword = (toEmail,  token) => {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    service: "Gmail",
+    host: process.env.COFFEESHOP_HOST,
+    port: process.env.COFFEESHOP_PORT,
+    secure: process.env.COFFEESHOP_SECURE,
     auth: {
       user: process.env.COFFEESHOP_EMAIL, // generated ethereal user
       pass: process.env.COFFEESHOP_PASS, // generated ethereal password
