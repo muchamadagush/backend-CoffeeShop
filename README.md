@@ -66,6 +66,7 @@ FRONT_URL
 SECRET_KEY
 COFFEESHOP_EMAIL
 COFFEESHOP_PASS
+```
 
 4. Make a new database and import [coffee-shop.sql](https://drive.google.com/file/d/1G8HcjIIJFXqUY0EUJD22D9V8IDbuJrM7/view?usp=sharing)
 
